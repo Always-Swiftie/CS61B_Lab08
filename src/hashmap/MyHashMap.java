@@ -185,7 +185,21 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException("Sorry");
+        //通过hashcode找到对应的节点，如果不存在返回null/存在就在链表中删除这个节点
+        //如何调用remove方法？
+        int hashcode=hash(key);
+        int index=hashcode&(buckets.length-1);
+        //case1:
+        if(buckets[index]==null){
+            return null;//not found!
+        }
+        for(Node p:buckets[index]){
+            if(p.key.equals(key)){
+                buckets[index].remove(p);//first attempt
+                return p.value;
+            }
+        }
+        return null;
     }
     @Override
     public Iterator<K> iterator() {
