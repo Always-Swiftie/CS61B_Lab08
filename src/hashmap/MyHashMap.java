@@ -180,8 +180,18 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
 
     @Override
-    public Set<K> keySet() {
-        throw new UnsupportedOperationException("Sorry");
+    public Set<K> keySet() {//返回一个集合，包含这个Hashmap中包含的所有key
+        //遍历整个桶数组，如果当前索引位置为空,就跳过
+        //如果当前索引位置不为空，进入链表中把每个key值记录到set中里面
+        Set<K> keys=new HashSet<>();
+        for(int i=0;i< buckets.length;i++){
+            if(!buckets[i].isEmpty()){
+                for(Node p:buckets[i]){
+                    keys.add(p.key);
+                }
+            }
+        }
+        return keys;
     }
     @Override
     public V remove(K key) {
